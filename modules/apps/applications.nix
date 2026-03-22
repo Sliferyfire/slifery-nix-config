@@ -19,8 +19,17 @@
     intel-gpu-tools
     pciutils
 
+    # Dev 
+    nodejs_24
+    yarn
+    python311 
+    uv
+
     # Other pckgs
     wget
+    curl
+    sysstat
+    lm_sensors
     usbutils
     # Copy and paste from neovim
     wl-clipboard

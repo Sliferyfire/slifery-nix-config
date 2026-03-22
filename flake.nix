@@ -1,6 +1,20 @@
 {
   description = "Configuración Modular";
 
+  # the nixConfig here only affects the flake itself, not the system configuration!
+  nixConfig = {
+    # substituers will be appended to the default substituters when fetching packages
+    # nix com    extra-substituters = [munity's cache server
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
+  # ----- INPUTS -----
+
   # System Inputs
   inputs = {
     # Primary channels
@@ -28,24 +42,36 @@
 
   };
 
+  # ----- OUTPUTS -----
+
   # System outputs
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./configuration.nix
-        
-        # Home manager
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-	  home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.sliferyfire = import ./home/home.nix;
-        }
-      ];
-    };
+
+  nixosConfigurations = {
+
+    rog-strix = let 
+      username = "sliferyfire";
+      specialArgs = { inherit username; };
+    in 
+      nixpkgs.lib.nixosSystem {
+	inherit specialArgs;
+	system = "x86_64-linux";
+	modules = [
+ 	  ./hosts/laptop
+
+	  # Home manager 
+	  home-manager.nixosModules.home-manager
+	  {
+	    home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+	    home-manager.extraSpecialArgs = { inherit inputs; };
+	    home-manager.users.${username} = import ./users/${username}/home.nix;
+	  }
+	];
+      };
+
+  };
+
 
   };
 }

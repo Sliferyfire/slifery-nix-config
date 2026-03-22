@@ -3,7 +3,7 @@
 {
 
   imports = [
-    ./desktop/noctalia.nix 
+    ../desktop/noctalia.nix 
   ];
 
   home.packages = with pkgs; [ 
@@ -11,7 +11,6 @@
     discord
     dbeaver-bin
     obsidian
-    obs-studio
     spotify
     spicetify-cli
     prismlauncher

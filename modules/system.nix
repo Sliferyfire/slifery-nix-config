@@ -1,31 +1,39 @@
-{ config, pkgs, ... }:
+{ pkgs, lib, username, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./modules/system/boot.nix
-      ./modules/system/network.nix
-      ./modules/system/audio.nix
-      ./modules/system/optimizations.nix
-      ./modules/system/services/flatpak.nix
-      ./modules/system/services/docker.nix
-      ./modules/system/services/asus.nix
-      ./modules/desktop/plasma/default.nix
-      ./modules/desktop/niri/default.nix
-      ./modules/apps/applications.nix
-      ./modules/apps/git.nix
+    [ 
+      ./fonts
+      ./audio
+      ./optimizations
+
+      ./services/asus
+      ./services/flatpak
+      ./services/docker
+      ./services/lamp
+      ./services/astersik
+
+      ./desktop/plasma
+      ./desktop/niri
+
+      ./apps/applications.nix
     ];
   
-  # Enabling experimental functions (flakes)
-  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
-
   # ----- Users -----
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.sliferyfire = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "Aaron David Olguin";
+    description = username;
     extraGroups = [ "networkmanager" "wheel" "lp" "scanner" "docker" ];
+  };
+
+  nix.settings.trusted-users = [username];
+
+
+  # ----- Nix Settings -----
+  nix.settings = {
+    # enable flakes globally
+    experimental-features = ["nix-command" "flakes"];
   };
 
   # ------ System Basics ------ 
@@ -93,3 +101,4 @@
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
+
