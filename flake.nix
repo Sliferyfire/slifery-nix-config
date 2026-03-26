@@ -1,18 +1,6 @@
 {
   description = "Configuración Modular";
 
-  # the nixConfig here only affects the flake itself, not the system configuration!
-  nixConfig = {
-    # substituers will be appended to the default substituters when fetching packages
-    # nix com    extra-substituters = [munity's cache server
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
-
   # ----- INPUTS -----
 
   # System Inputs
@@ -45,7 +33,7 @@
   # ----- OUTPUTS -----
 
   # System outputs
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nvf, ... }@inputs: {
 
   nixosConfigurations = {
 
@@ -57,6 +45,7 @@
 	inherit specialArgs;
 	system = "x86_64-linux";
 	modules = [
+	  nvf.nixosModules.default
  	  ./hosts/laptop
 
 	  # Home manager 
@@ -64,7 +53,7 @@
 	  {
 	    home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-	    home-manager.extraSpecialArgs = { inherit inputs; };
+	    home-manager.extraSpecialArgs = { inherit inputs username; };
 	    home-manager.users.${username} = import ./users/${username}/home.nix;
 	  }
 	];

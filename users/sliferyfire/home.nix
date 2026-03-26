@@ -4,10 +4,12 @@
 
   imports = [
     ../../home/core.nix
-    ./git
+    ./git.nix
 
     ../../home/programs
-    
+    ../../home/shell
+    ../../home/nvfvim
+
   ];
 
 }

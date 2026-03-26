@@ -10,7 +10,7 @@
   ];
 
   # Asus linux instalation 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   # ----- Boot -----
   
@@ -69,10 +69,12 @@
 
   # for Nvidia GPU
   services.xserver.videoDrivers = ["nvidia"];
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
+
+    open = true;
   };
 
 

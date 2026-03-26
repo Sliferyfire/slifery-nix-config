@@ -11,7 +11,7 @@
       ./services/flatpak
       ./services/docker
       ./services/lamp
-      ./services/astersik
+      ./services/asterisk
 
       ./desktop/plasma
       ./desktop/niri
@@ -25,6 +25,7 @@
     isNormalUser = true;
     description = username;
     extraGroups = [ "networkmanager" "wheel" "lp" "scanner" "docker" ];
+    shell = pkgs.zsh;
   };
 
   nix.settings.trusted-users = [username];
@@ -53,8 +54,7 @@
     LC_TELEPHONE = "es_MX.UTF-8";
     LC_TIME = "es_MX.UTF-8"; 
   };
- 
- 
+
  # ----- DESKTOP CONFIGURATION ----- 
   # Enable and configuring the X11 windowing system.
   services.xserver.enable = true;
