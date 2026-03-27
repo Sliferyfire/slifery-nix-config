@@ -11,13 +11,14 @@
 	
       shellAliases = {
         ls = "ls -h  --color=auto --group-directories-first";
-	la = "ls -a";
+	      la = "ls -a";
         ll = "ls -l";
-	c = "clear";
-	rm = "rm -iv";
-	cp = "cp -iv";
-	mv = "mv -iv";
-        update = "sudo nixos-rebuild switch";
+	      c = "clear";
+	      rm = "rm -iv";
+	      cp = "cp -iv";
+	      mv = "mv -iv";
+        nix-update = "sudo nixos-rebuild switch --flake ~/nix-config#rog-strix";
+        nix-test = "sudo nixos-rebuild test --flake ~/nix-config#rog-strix";
       };
       
       history.size = 10000;
@@ -27,10 +28,10 @@
       
       oh-my-zsh = {
         enable = true;
-	plugins = [
+	      plugins = [
           "git"
-	  "npm" 
-	];
+	        "npm" 
+	      ];
       };
 
     };

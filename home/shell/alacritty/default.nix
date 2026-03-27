@@ -14,6 +14,7 @@ programs.alacritty = {
         x = 10;
         y = 10;
       };
+      window.startup_mode = "Maximized";
       scrolling.history = 10000;
 
       font = {

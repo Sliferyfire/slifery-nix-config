@@ -35,32 +35,31 @@
   # System outputs
   outputs = { self, nixpkgs, home-manager, nvf, ... }@inputs: {
 
-  nixosConfigurations = {
+    nixosConfigurations = {
 
-    rog-strix = let 
-      username = "sliferyfire";
-      specialArgs = { inherit username; };
-    in 
-      nixpkgs.lib.nixosSystem {
-	inherit specialArgs;
-	system = "x86_64-linux";
-	modules = [
-	  nvf.nixosModules.default
- 	  ./hosts/laptop
+      rog-strix = let
+        username = "sliferyfire";
+        specialArgs = { inherit username; };
+      in 
+        nixpkgs.lib.nixosSystem {
+    	    inherit specialArgs;
+	        system = "x86_64-linux";
+	        modules = [
+	          nvf.nixosModules.default
+ 	          ./hosts/laptop
 
-	  # Home manager 
-	  home-manager.nixosModules.home-manager
-	  {
-	    home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-	    home-manager.extraSpecialArgs = { inherit inputs username; };
-	    home-manager.users.${username} = import ./users/${username}/home.nix;
-	  }
-	];
-      };
+	          # Home manager 
+	          home-manager.nixosModules.home-manager
+	          {
+	            home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+	            home-manager.extraSpecialArgs = { inherit inputs username; };
+	            home-manager.users.${username} = import ./users/${username}/home.nix;
+	          }
+	        ];
+        };
 
-  };
-
+    };
 
   };
 }
