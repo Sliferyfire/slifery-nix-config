@@ -25,20 +25,7 @@
         same => n,Queue(cola_japam, , , , 300)
         same => n,Hangup()
 
-        include => japam
-
-      [agentes-cola]
-      ; --- Código para Entrar a la Cola (*41) ---
-      exten => *41,1,NoOp(Agente ${CALLERID (num)} entrando a la cola)
-        same => n,AddQueueMember(cola_japam,PJSIP/${CALLERID (num)})
-        same => n,Playback(agent-loginok) ; "Agent logged in"
-        same => n,Hangup()
-
-      ; --- Código para Salir de la Cola (*42) ---
-      exten => *42,1,NoOp(Agente ${CALLERID (num)} saliendo de la cola)
-        same => n,RemoveQueueMember(cola_japam,PJSIP/${CALLERID (num)})
-        same => n,Playback(agent-loggedoff) ; "Agent logged off"
-        same => n,Hangup()
+        include => japam 
 
     '';
 

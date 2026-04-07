@@ -1,42 +1,54 @@
-{ pkgs, lib, username, ... }:
+{
+  pkgs,
+  username,
+  ...
+}:
 
 {
-  imports =
-    [ 
-      ./fonts
-      ./audio
-      ./optimizations
+  imports = [
+    ./fonts
+    ./audio
+    ./sddm
+    ./optimizations
 
-      ./services/asus
-      ./services/flatpak
-      ./services/docker
-      ./services/lamp
-      ./services/asterisk
+    ./services/asus
+    ./services/flatpak
+    ./services/docker
+    ./services/lamp
+    ./services/asterisk
 
-      ./desktop/plasma
+    ./desktop/plasma
 
-      ./apps/applications.nix
-    ];
-  
+    ./apps/applications.nix
+  ];
+
   # ----- Users -----
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" "lp" "scanner" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "lp"
+      "scanner"
+      "docker"
+    ];
     shell = pkgs.zsh;
   };
 
-  nix.settings.trusted-users = [username];
-
+  nix.settings.trusted-users = [ username ];
 
   # ----- Nix Settings -----
   nix.settings = {
     # enable flakes globally
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
-  # ------ System Basics ------ 
+  # ------ System Basics ------
   # Set your time zone.
   time.timeZone = "America/Mexico_City";
 
@@ -51,18 +63,18 @@
     LC_NUMERIC = "es_MX.UTF-8";
     LC_PAPER = "es_MX.UTF-8";
     LC_TELEPHONE = "es_MX.UTF-8";
-    LC_TIME = "es_MX.UTF-8"; 
+    LC_TIME = "es_MX.UTF-8";
   };
 
- # ----- DESKTOP CONFIGURATION ----- 
+  # ----- DESKTOP CONFIGURATION -----
   # Enable and configuring the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable Wayland support for X11 apps 
+  # Enable Wayland support for X11 apps
   programs.xwayland.enable = true;
-  
+
   # Enable sddm
-  services.displayManager.sddm.enable = true;
+  # services.displayManager.sddm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -89,12 +101,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Enable Oh My Zsh 
+  # Enable Oh My Zsh
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh ];
 
-  # Hardware Configuration 
-
+  # Hardware Configuration
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -105,4 +116,3 @@
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
-

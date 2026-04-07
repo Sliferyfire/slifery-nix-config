@@ -1,4 +1,9 @@
-{ inputs, pkgs, conf, ... }:
+{
+  inputs,
+  pkgs,
+  conf,
+  ...
+}:
 
 {
 
@@ -11,11 +16,26 @@
     settings = {
       vim = {
         viAlias = false;
-        vimAlias = true; 
+        vimAlias = true;
+
         lsp = {
           enable = true;
           formatOnSave = true;
+          lightbulb.enable = true;
+          lspsaga.enable = true;
         };
+
+        autocomplete.nvim-cmp = {
+          enable = true;
+          mappings = {
+            confirm = "<CR>"; # Enter para aceptar sugerencia
+            complete = "<C-Space>"; # Ctrl+Espacio abrir el menu
+            next = "<Tab>"; # Tabulador para bajar en la lista
+            previous = "<S-Tab>"; # Shift+Tabulador para subir
+          };
+        };
+
+        snippets.luasnip.enable = true;
 
         formatter.conform-nvim = {
           enable = true;
@@ -125,13 +145,46 @@
           }
           {
             mode = "n";
-            key = "<leader>cf";
+            key = "<leader>cf"; # Espacio + CF -> Formatear codigo
             action = "<cmd>lua vim.lsp.buf.format()<CR>";
             silent = true;
           }
+
+          # NvimTree
+          {
+            mode = "n";
+            key = "<C-n>"; # Ctrl + n
+            action = "<cmd>NvimTreeToggle<CR>";
+            silent = true;
+          }
+          {
+            mode = "n";
+            key = "<leader>e"; # Espacio + e (Alternativa)
+            action = "<cmd>NvimTreeToggle<CR>";
+            silent = true;
+          }
+          # Bufferline
+          {
+            mode = "n";
+            key = "<Tab>"; # Tab -> Pestaña siguiente
+            action = "<cmd>BufferLineCycleNext<CR>";
+            silent = true;
+          }
+          {
+            mode = "n";
+            key = "<S-Tab>"; # Shift + Tab -> Pestaña anterior
+            action = "<cmd>BufferLineCyclePrev<CR>";
+            silent = true;
+          }
+          {
+            mode = "n";
+            key = "<leader>x"; # Espacoi + X -> Cerrar pestaña
+            action = "<cmd>bdelete<CR>";
+            silent = true;
+          }
         ];
-        
-        # Language support 
+
+        # Language support
         languages = {
           nix.enable = true;
 
@@ -142,7 +195,7 @@
           tailwind.enable = true;
 
           python.enable = true;
-          clang.enable = true; 
+          clang.enable = true;
         };
 
         visuals = {
@@ -166,8 +219,14 @@
         statusline.lualine = {
           enable = true;
           theme = "catppuccin";
-          sectionSeparator = { left = ""; right = ""; };
-          componentSeparator = { left = ""; right = ""; };
+          sectionSeparator = {
+            left = "";
+            right = "";
+          };
+          componentSeparator = {
+            left = "";
+            right = "";
+          };
         };
 
         telescope = {
@@ -193,6 +252,25 @@
             };
             pickers.find_files.hidden = true;
           };
+        };
+
+        filetree.nvimTree = {
+          enable = true;
+          setupOpts = {
+            view = {
+              width = 30;
+              side = "left";
+            };
+            renderer = {
+              highlight_git = true;
+              indent_markers.enable = true;
+            };
+          };
+        };
+
+        # Barra de pestañas superior
+        tabline.nvimBufferline = {
+          enable = true;
         };
 
         git.gitsigns = {
@@ -226,10 +304,30 @@
                 "└───────────────────────────┘"
               ];
               center = [
-                { icon = " "; desc = "Find file"; key = "f"; action = "Telescope find_files"; }
-                { icon = " "; desc = "Live grep"; key = "g"; action = "Telescope live_grep"; }
-                { icon = " "; desc = "File tree"; key = "e"; action = "NvimTreeToggle"; }
-                { icon = " "; desc = "Quit"; key = "q"; action = "qa"; }
+                {
+                  icon = " ";
+                  desc = "Find file";
+                  key = "f";
+                  action = "Telescope find_files";
+                }
+                {
+                  icon = " ";
+                  desc = "Live grep";
+                  key = "g";
+                  action = "Telescope live_grep";
+                }
+                {
+                  icon = " ";
+                  desc = "File tree";
+                  key = "e";
+                  action = "NvimTreeToggle";
+                }
+                {
+                  icon = " ";
+                  desc = "Quit";
+                  key = "q";
+                  action = "qa";
+                }
               ];
               footer = [ "Tip: press ? for which-key" ];
             };
@@ -252,7 +350,7 @@
         '';
 
       };
-        
+
     };
   };
 

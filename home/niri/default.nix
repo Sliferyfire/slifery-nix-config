@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
 
@@ -6,16 +11,23 @@
 
   programs.niri = {
     package = pkgs.niri;
-    # enable = true; 
+    # enable = true;
     settings = {
       spawn-at-startup = [
-        { command = [ "noctalia-shell" ]; } 
+        { command = [ "noctalia-shell" ]; }
       ];
 
       environment = {
         DISPLAY = ":0";
       };
-      
+
+      window-rules = [
+        {
+          matches = [ { app-id = "Alacritty"; } ];
+          draw-border-with-background = false;
+        }
+      ];
+
       input = {
         keyboard.xkb = {
           layout = "latam,us";
@@ -32,7 +44,7 @@
       };
 
       layout = {
-        gaps = 8; 
+        gaps = 8;
 
         border = {
           enable = true;
@@ -47,16 +59,40 @@
         };
 
       };
-      
+
       binds = with config.lib.niri.actions; {
         "Mod+Return".action = spawn "alacritty";
-        "Mod+B".action = spawn "firefox"; 
+        "Mod+B".action = spawn "firefox";
         "Mod+E".action = spawn "dolphin";
 
-        "Mod+A".action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ];
-        "Mod+Shift+W".action.spawn = [ "noctalia-shell" "ipc" "call" "wallpaper" "toggle" ];
-        "Mod+P".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
-        "Mod+R".action.spawn = [ "noctalia-shell" "ipc" "call" "controlCenter" "toggle" ];
+        "Mod+A".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "launcher"
+          "toggle"
+        ];
+        "Mod+Shift+W".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "wallpaper"
+          "toggle"
+        ];
+        "Mod+P".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "sessionMenu"
+          "toggle"
+        ];
+        "Mod+R".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "controlCenter"
+          "toggle"
+        ];
 
         "Mod+Q".action = close-window;
         "Mod+Shift+E".action = quit;
@@ -101,8 +137,8 @@
         "Mod+WheelScrollDown".action = focus-column-left;
         "Mod+WheelScrollUp".action = focus-column-right;
         "Mod+Ctrl+WheelScrollDown".action = focus-workspace-down;
-        "Mod+Ctrl+WheelScrollUp".action = focus-workspace-up; 
-        
+        "Mod+Ctrl+WheelScrollUp".action = focus-workspace-up;
+
         "Mod+1".action = focus-workspace 1;
         "Mod+2".action = focus-workspace 2;
         "Mod+3".action = focus-workspace 3;
@@ -115,24 +151,71 @@
 
         "XF86AudioRaiseVolume".action = spawn "sh" "-c" "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
         "XF86AudioLowerVolume".action = spawn "sh" "-c" "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
-        "XF86AudioMute".action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
-        "XF86AudioMicMute".action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
-        "XF86MonBrightnessUp".action.spawn = [ "brightnessctl" "set" "5%+" ];
-        "XF86MonBrightnessDown".action.spawn = [ "brightnessctl" "set" "5%-" ];
+        "XF86AudioMute".action.spawn = [
+          "wpctl"
+          "set-mute"
+          "@DEFAULT_AUDIO_SINK@"
+          "toggle"
+        ];
+        "XF86AudioMicMute".action.spawn = [
+          "wpctl"
+          "set-mute"
+          "@DEFAULT_AUDIO_SOURCE@"
+          "toggle"
+        ];
+        "XF86MonBrightnessUp".action.spawn = [
+          "brightnessctl"
+          "set"
+          "5%+"
+        ];
+        "XF86MonBrightnessDown".action.spawn = [
+          "brightnessctl"
+          "set"
+          "5%-"
+        ];
 
-        "XF86AudioPlay".action.spawn = [ "playerctl" "play" ];
-        "XF86AudioStop".action.spawn = [ "playerctl" "pause" ];
-        "XF86AudioNext".action.spawn = [ "playerctl" "next" ];
-        "XF86AudioPrev".action.spawn = [ "playerctl" "previous" ];
+        "XF86AudioPlay".action.spawn = [
+          "playerctl"
+          "play"
+        ];
+        "XF86AudioStop".action.spawn = [
+          "playerctl"
+          "pause"
+        ];
+        "XF86AudioNext".action.spawn = [
+          "playerctl"
+          "next"
+        ];
+        "XF86AudioPrev".action.spawn = [
+          "playerctl"
+          "previous"
+        ];
 
         # Plugin clipper
-        "Mod+V".action.spawn = [ "noctalia-shell" "ipc" "call" "plugin:clipper" "toggle" ];
-        "Mod+Shift+C".action.spawn = [ "noctalia-shell" "ipc" "call" "plugin:clipper" "addSelectionToTodo" ];
-        "Mod+Shift+X".action.spawn = [ "noctalia-shell" "ipc" "call" "plugin:clipper" "addSelectionToNoteCard" ]; 
+        "Mod+V".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "plugin:clipper"
+          "toggle"
+        ];
+        "Mod+Shift+C".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "plugin:clipper"
+          "addSelectionToTodo"
+        ];
+        "Mod+Shift+X".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "plugin:clipper"
+          "addSelectionToNoteCard"
+        ];
       };
 
     };
-    
 
   };
 
