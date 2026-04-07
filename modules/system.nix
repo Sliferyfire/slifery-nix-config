@@ -14,7 +14,6 @@
       ./services/asterisk
 
       ./desktop/plasma
-      ./desktop/niri
 
       ./apps/applications.nix
     ];
@@ -70,6 +69,11 @@
     layout = "us";
     variant = "";
   };
+
+  # Enable niri
+  programs.niri.package = pkgs.niri;
+  programs.niri.enable = true;
+  services.displayManager.defaultSession = "niri";
 
   # Noctalia services
   services.power-profiles-daemon.enable = true;

@@ -9,7 +9,8 @@
     ../../home/programs
     ../../home/shell
     ../../home/nvfvim
-
+    ../../home/niri
+    ../../home/niri/noctalia
   ];
 
 }

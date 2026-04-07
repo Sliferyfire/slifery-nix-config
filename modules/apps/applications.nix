@@ -34,6 +34,8 @@
     # Copy and paste from neovim
     wl-clipboard
     fastfetch
+
+    xwayland-satellite
   ];
 
 }
