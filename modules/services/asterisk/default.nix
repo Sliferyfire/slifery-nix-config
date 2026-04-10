@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
 
@@ -16,7 +16,15 @@
 
       ; Al marcar 101, llamamos al Trunk SIP de LiveKit enviando el número "777"
       exten => 101,1,NoOp(Llamando al Agente JAPAM)
-        same => n,Dial(PJSIP/777@livekit)
+        same => n,Dial(PJSIP/777@livekit,20)
+        same => n,NoOp(El estado de la llamada a IA fue: ''${DIALSTATUS})
+        same => n,GotoIf($["''${DIALSTATUS}" != "ANSWER"]?enviar_a_humano)
+
+        same => n,Hangup()
+
+        same => n(enviar_a_humano),NoOp(Fallo en IA, redirigiendo a cola de humanos)
+        same => n,Playback(transfer)
+        same => n,Queue(cola_japam)
         same => n,Hangup()
 
 
@@ -27,6 +35,19 @@
 
         include => japam 
 
+
+      [agentes-cola]
+      ; --- Código para Entrar a la Cola (*41) ---
+      exten => *41,1,NoOp(Agente ''${CALLERID(num)} entrando a la cola)
+        same => n,AddQueueMember(cola_japam,PJSIP/''${CALLERID (num)})
+        same => n,Playback(agent-loginok) ; "Agent logged in"
+        same => n,Hangup()
+
+      ; --- Código para Salir de la Cola (*42) ---
+      exten => *42,1,NoOp(Agente ''${CALLERID(num)} saliendo de la cola)
+        same => n,RemoveQueueMember(cola_japam,PJSIP/''${CALLERID (num)})
+        same => n,Playback(agent-loggedoff) ; "Agent logged off"
+        same => n,Hangup()
     '';
 
     "pjsip.conf" = ''
@@ -56,6 +77,7 @@
         [livekit_aor]
         	type=aor
         	contact=sip:127.0.0.1:5061
+          qualify_frequency=30
         		
         [livekit]
         	type=endpoint

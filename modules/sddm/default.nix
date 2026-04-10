@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   astronautTheme = pkgs.sddm-astronaut.override {
@@ -12,7 +12,7 @@ in
     displayManager = {
       sddm = {
         enable = true;
-        wayland.enable = true;
+        wayland.enable = false;
 
         theme = "${astronautTheme}/share/sddm/themes/sddm-astronaut-theme";
 
@@ -21,6 +21,7 @@ in
           kdePackages.qtsvg
           kdePackages.qtmultimedia
           kdePackages.qtvirtualkeyboard
+          kdePackages.qt5compat
         ];
       };
     };

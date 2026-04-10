@@ -15,15 +15,25 @@
     settings = {
       spawn-at-startup = [
         { command = [ "noctalia-shell" ]; }
+        {
+          command = [
+            "xwayland-satellite"
+            ":11"
+          ];
+        }
       ];
 
       environment = {
-        DISPLAY = ":0";
+        DISPLAY = ":11";
       };
 
       window-rules = [
         {
           matches = [ { app-id = "Alacritty"; } ];
+          draw-border-with-background = false;
+        }
+        {
+          matches = [ { app-id = "Firefox"; } ];
           draw-border-with-background = false;
         }
       ];
@@ -34,8 +44,8 @@
         };
 
         touchpad = {
-          natural-scroll = false;
-          tap = false;
+          natural-scroll = true;
+          tap = true;
         };
 
         mouse = {

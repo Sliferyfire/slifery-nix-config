@@ -9,27 +9,27 @@
     ./hardware-configuration.nix
   ];
 
-  # Asus linux instalation 
+  # Asus linux instalation
   boot.kernelPackages = pkgs.linuxPackages;
 
   # ----- Boot -----
-  
+
   # Bootloader
-  boot.loader = { 
+  boot.loader = {
     efi.canTouchEfiVariables = true;
     grub = {
       enable = true;
       device = "nodev";
       efiSupport = true;
       useOSProber = true;
-    };   
+    };
   };
-  
+
   # ----- Network -----
 
   # Network Host name
-  networking.hostName = "rog-strix"; 
-  
+  networking.hostName = "rog-strix";
+
   # Enable networking
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
@@ -43,17 +43,20 @@
   # networking.firewall.allowedTCPPorts = [ 5060 ];
   networking.firewall.allowedUDPPorts = [ 5060 ];
   networking.firewall.allowedUDPPortRanges = [
-    { from = 10000; to = 20000; }
+    {
+      from = 10000;
+      to = 20000;
+    }
   ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
- # ----- BLUETOOTH -----
+  # ----- BLUETOOTH -----
 
-  # Enable and configure bluetooth 
-    hardware.bluetooth = {
+  # Enable and configure bluetooth
+  hardware.bluetooth = {
     enable = true;
-    powerOnBoot = true; 
+    powerOnBoot = true;
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
@@ -62,13 +65,13 @@
     };
   };
 
-  # Enable blueman bluetooth manager 
+  # Enable blueman bluetooth manager
   services.blueman.enable = true;
 
   # ----- GPU Settings -----
 
   # for Nvidia GPU
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -76,7 +79,6 @@
 
     open = true;
   };
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

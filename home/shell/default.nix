@@ -1,15 +1,13 @@
-{config, ...}: 
+{ config, ... }:
 
 {
 
   imports = [
     ./zsh
     ./alacritty
-    #./tmux
+    ./tmux
     ./common.nix
     ./starship.nix
   ];
 
 }
-
-

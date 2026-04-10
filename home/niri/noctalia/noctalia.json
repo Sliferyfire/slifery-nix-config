@@ -694,9 +694,36 @@
     "desktopWidgets": {
       "enabled": true,
       "overviewEnabled": true,
-      "gridSnap": false,
+      "gridSnap": true,
       "gridSnapScale": false,
-      "monitorWidgets": []
+      "monitorWidgets": [
+        {
+          "name": "eDP-2",
+          "widgets": [
+            {
+              "defaultSettings": {
+                "barWidth": 0.6,
+                "bloomIntensity": 0.5,
+                "customPrimaryColor": "#6750A4",
+                "customSecondaryColor": "#625B71",
+                "fadeWhenIdle": false,
+                "innerDiameter": 0.7,
+                "ringOpacity": 0.8,
+                "rotationSpeed": 0.5,
+                "sensitivity": 1.5,
+                "useCustomColors": false,
+                "visualizationMode": 3,
+                "waveThickness": 1
+              },
+              "id": "plugin:fancy-audiovisualizer",
+              "scale": 1.6128258770283406,
+              "showBackground": true,
+              "x": 1380,
+              "y": 80
+            }
+          ]
+        }
+      ]
     }
   },
   "state": {

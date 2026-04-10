@@ -73,8 +73,10 @@
   # Enable Wayland support for X11 apps
   programs.xwayland.enable = true;
 
-  # Enable sddm
-  # services.displayManager.sddm.enable = true;
+  # Export DISPLAY variable for xwayland satelite
+  environment.variables = {
+    DISPLAY = ":11";
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
