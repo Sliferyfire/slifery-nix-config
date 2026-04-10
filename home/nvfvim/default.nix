@@ -1,13 +1,9 @@
 {
   inputs,
   pkgs,
-  conf,
   ...
-}:
-
-{
-
-  imports = [ inputs.nvf.homeManagerModules.default ];
+}: {
+  imports = [inputs.nvf.homeManagerModules.default];
 
   programs.nvf = {
     enable = true;
@@ -18,6 +14,9 @@
         viAlias = false;
         vimAlias = true;
 
+        # ---------------------------------------------------------
+        # Core features (lsp, autocomplete, treesitter)
+        # ---------------------------------------------------------
         lsp = {
           enable = true;
           formatOnSave = true;
@@ -37,6 +36,32 @@
 
         snippets.luasnip.enable = true;
 
+        treesitter = {
+          enable = true;
+          context.enable = true;
+        };
+
+        # ---------------------------------------------------------
+        # languages
+        # ---------------------------------------------------------
+        # Language support
+        languages = {
+          #enableLSP = true;
+          enableFormat = true;
+          enableTreesitter = true;
+
+          nix.enable = true;
+
+          ts.enable = true;
+          html.enable = true;
+          css.enable = true;
+          json.enable = true;
+          tailwind.enable = true;
+
+          python.enable = true;
+          clang.enable = true;
+        };
+
         formatter.conform-nvim = {
           enable = true;
           setupOpts = {
@@ -45,15 +70,178 @@
               timeout_ms = 500;
             };
             formatters_by_ft = {
-              javascript = [ "prettier" ];
-              typescript = [ "prettier" ];
-              css = [ "prettier" ];
-              html = [ "prettier" ];
-              json = [ "prettier" ];
+              javascript = ["prettier"];
+              typescript = ["prettier"];
+              css = ["prettier"];
+              html = ["prettier"];
+              json = ["prettier"];
             };
           };
         };
 
+        # ---------------------------------------------------------
+        # Visuals
+        # ---------------------------------------------------------
+        theme = {
+          enable = true;
+          name = "catppuccin";
+          style = "mocha";
+        };
+
+        statusline.lualine = {
+          enable = true;
+          theme = "catppuccin";
+          sectionSeparator = {
+            left = "";
+            right = "";
+          };
+          componentSeparator = {
+            left = "";
+            right = "";
+          };
+        };
+
+        visuals = {
+          indent-blankline = {
+            enable = true;
+            setupOpts = {
+              indent = {
+                char = "▏";
+                tab_char = "▏";
+              };
+              scope = {
+                enabled = true;
+                show_start = true;
+                show_end = false;
+              };
+            };
+          };
+          nvim-web-devicons.enable = true;
+        };
+
+        # Barra de pestañas superior
+        tabline.nvimBufferline = {
+          enable = true;
+        };
+
+        # ---------------------------------------------------------
+        # Dev Tools
+        # ---------------------------------------------------------
+        telescope = {
+          enable = true;
+          extensions = [
+            {
+              name = "fzf";
+              packages = [pkgs.vimPlugins.telescope-fzf-native-nvim];
+              setup = {
+                fzf = {
+                  fuzzy = true;
+                  override_file_sorter = true;
+                  override_generic_sorter = true;
+                  case_mode = "smart_case";
+                };
+              };
+            }
+          ];
+          setupOpts = {
+            defaults = {
+              layout_config.horizontal.prompt_position = "top";
+              sorting_strategy = "ascending";
+            };
+            pickers.find_files.hidden = true;
+          };
+        };
+
+        filetree.nvimTree = {
+          enable = true;
+          setupOpts = {
+            view = {
+              width = 40;
+              side = "left";
+            };
+            renderer = {
+              highlight_git = true;
+              indent_markers.enable = true;
+            };
+          };
+        };
+
+        git.gitsigns = {
+          enable = true;
+          setupOpts = {
+            attach_to_untracked = true;
+            current_line_blame = true;
+            #current_line_blame_opts = {
+            #delay = 0;
+            #virt_text_pos = "eol";
+            #};
+          };
+        };
+
+        terminal.toggleterm = {
+          enable = true;
+          lazygit = {
+            enable = true;
+            mappings.open = "<leader>lg";
+          };
+        };
+
+        extraPlugins = {
+          vim-tmux-navigator = {
+            package = pkgs.vimPlugins.vim-tmux-navigator;
+          };
+        };
+
+        # ---------------------------------------------------------
+        # Extra
+        # ---------------------------------------------------------
+        binds.whichKey.enable = true;
+        autopairs.nvim-autopairs.enable = true;
+
+        dashboard.dashboard-nvim = {
+          enable = true;
+          setupOpts = {
+            theme = "doom";
+            config = {
+              header = [
+                "┌───────────────────────────┐"
+                "│   Welcome back, Aaron!     │"
+                "└───────────────────────────┘"
+              ];
+              center = [
+                {
+                  icon = " ";
+                  desc = "Find file";
+                  key = "f";
+                  action = "Telescope find_files";
+                }
+                {
+                  icon = " ";
+                  desc = "Live grep";
+                  key = "g";
+                  action = "Telescope live_grep";
+                }
+                {
+                  icon = " ";
+                  desc = "File tree";
+                  key = "e";
+                  action = "NvimTreeToggle";
+                }
+                {
+                  icon = " ";
+                  desc = "Quit";
+                  key = "q";
+                  action = "qa";
+                }
+              ];
+              footer = ["Tip: press ? for which-key"];
+            };
+          };
+        };
+
+        # ---------------------------------------------------------
+        # Options and keymaps
+        # ---------------------------------------------------------
         options = {
           # general settings
           clipboard = "unnamedplus";
@@ -140,8 +328,23 @@
           }
           {
             mode = "n";
+            key = "<leader>fs";
+            action = "<cmd>Telescope lsp_document_symbols<CR>";
+          }
+          {
+            mode = "n";
             key = "<leader>lp";
             action = "<cmd>lua require('gitsigns').preview_hunk()<CR>";
+          }
+          {
+            mode = "n";
+            key = "<leader>ca"; # Espacio + CA -> Ver sugerencias
+            action = "<cmd>Lspsaga code_action<CR>";
+          }
+          {
+            mode = "n";
+            key = "<leader>cd"; # Espacio + CD -> Ver errores en linea
+            action = "<cmd>Lspsaga show_line_diagnostics<CR>";
           }
           {
             mode = "n";
@@ -184,162 +387,6 @@
           }
         ];
 
-        # Language support
-        languages = {
-          nix.enable = true;
-
-          ts.enable = true;
-          html.enable = true;
-          css.enable = true;
-          json.enable = true;
-          tailwind.enable = true;
-
-          python.enable = true;
-          clang.enable = true;
-        };
-
-        visuals = {
-          indent-blankline = {
-            enable = true;
-            setupOpts = {
-              indent = {
-                char = "▏";
-                tab_char = "▏";
-              };
-              scope = {
-                enabled = true;
-                show_start = true;
-                show_end = false;
-              };
-            };
-          };
-          nvim-web-devicons.enable = true;
-        };
-
-        statusline.lualine = {
-          enable = true;
-          theme = "catppuccin";
-          sectionSeparator = {
-            left = "";
-            right = "";
-          };
-          componentSeparator = {
-            left = "";
-            right = "";
-          };
-        };
-
-        telescope = {
-          enable = true;
-          extensions = [
-            {
-              name = "fzf";
-              packages = [ pkgs.vimPlugins.telescope-fzf-native-nvim ];
-              setup = {
-                fzf = {
-                  fuzzy = true;
-                  override_file_sorter = true;
-                  override_generic_sorter = true;
-                  case_mode = "smart_case";
-                };
-              };
-            }
-          ];
-          setupOpts = {
-            defaults = {
-              layout_config.horizontal.prompt_position = "top";
-              sorting_strategy = "ascending";
-            };
-            pickers.find_files.hidden = true;
-          };
-        };
-
-        filetree.nvimTree = {
-          enable = true;
-          setupOpts = {
-            view = {
-              width = 30;
-              side = "left";
-            };
-            renderer = {
-              highlight_git = true;
-              indent_markers.enable = true;
-            };
-          };
-        };
-
-        # Barra de pestañas superior
-        tabline.nvimBufferline = {
-          enable = true;
-        };
-
-        git.gitsigns = {
-          enable = true;
-          setupOpts = {
-            attach_to_untracked = true;
-            current_line_blame = true;
-            current_line_blame_opts = {
-              delay = 0;
-              virt_text_pos = "eol";
-            };
-          };
-        };
-
-        terminal.toggleterm = {
-          enable = true;
-          lazygit = {
-            enable = true;
-            mappings.open = "<leader>lg";
-          };
-        };
-
-        dashboard.dashboard-nvim = {
-          enable = true;
-          setupOpts = {
-            theme = "doom";
-            config = {
-              header = [
-                "┌───────────────────────────┐"
-                "│   Welcome back, Aaron!     │"
-                "└───────────────────────────┘"
-              ];
-              center = [
-                {
-                  icon = " ";
-                  desc = "Find file";
-                  key = "f";
-                  action = "Telescope find_files";
-                }
-                {
-                  icon = " ";
-                  desc = "Live grep";
-                  key = "g";
-                  action = "Telescope live_grep";
-                }
-                {
-                  icon = " ";
-                  desc = "File tree";
-                  key = "e";
-                  action = "NvimTreeToggle";
-                }
-                {
-                  icon = " ";
-                  desc = "Quit";
-                  key = "q";
-                  action = "qa";
-                }
-              ];
-              footer = [ "Tip: press ? for which-key" ];
-            };
-          };
-        };
-
-        theme = {
-          enable = true;
-          name = "catppuccin";
-          style = "mocha";
-        };
-
         # Example: tiny Lua tweak when Nix doesn't cover a case.
         luaConfigRC.example = ''
           vim.api.nvim_create_autocmd("TextYankPost", {
@@ -348,10 +395,7 @@
             end,
           })
         '';
-
       };
-
     };
   };
-
 }
