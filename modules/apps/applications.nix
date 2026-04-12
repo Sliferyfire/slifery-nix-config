@@ -1,11 +1,12 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   # Install firefox.
   programs.firefox.enable = true;
 
-  # Steam Config 
+  # Steam Config
   programs.steam.enable = true;
 
   # List packages installed in system profile. To search, run:
@@ -19,10 +20,10 @@
     intel-gpu-tools
     pciutils
 
-    # Dev 
+    # Dev
     nodejs_24
     yarn
-    python311 
+    python311
     uv
 
     # Other pckgs
@@ -35,7 +36,8 @@
     wl-clipboard
     fastfetch
 
+    # Required for steam in Niri
     xwayland-satellite
+    protonup-qt
   ];
-
 }

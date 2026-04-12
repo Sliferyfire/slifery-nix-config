@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ../../modules/system.nix
 
@@ -11,6 +12,9 @@
 
   # Asus linux instalation
   boot.kernelPackages = pkgs.linuxPackages;
+
+  # Virtual memory
+  boot.kernel.sysctl."vm.max_map_count" = 2147483642;
 
   # ----- Boot -----
 
@@ -41,7 +45,7 @@
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ 5060 ];
-  networking.firewall.allowedUDPPorts = [ 5060 ];
+  networking.firewall.allowedUDPPorts = [5060];
   networking.firewall.allowedUDPPortRanges = [
     {
       from = 10000;
@@ -71,7 +75,7 @@
   # ----- GPU Settings -----
 
   # for Nvidia GPU
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
   hardware.graphics.enable = true;
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;

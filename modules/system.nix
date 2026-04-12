@@ -2,9 +2,7 @@
   pkgs,
   username,
   ...
-}:
-
-{
+}: {
   imports = [
     ./fonts
     ./audio
@@ -37,7 +35,7 @@
     shell = pkgs.zsh;
   };
 
-  nix.settings.trusted-users = [ username ];
+  nix.settings.trusted-users = [username];
 
   # ----- Nix Settings -----
   nix.settings = {
@@ -73,11 +71,6 @@
   # Enable Wayland support for X11 apps
   programs.xwayland.enable = true;
 
-  # Export DISPLAY variable for xwayland satelite
-  environment.variables = {
-    DISPLAY = ":11";
-  };
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -105,7 +98,7 @@
 
   # Enable Oh My Zsh
   programs.zsh.enable = true;
-  environment.shells = with pkgs; [ zsh ];
+  environment.shells = with pkgs; [zsh];
 
   # Hardware Configuration
 
@@ -116,5 +109,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }
