@@ -1,23 +1,21 @@
-
 {
-
-  # Enable and configure git 
+  # Enable and configure git
   programs.git = {
     enable = true;
 
     settings = {
       user = {
-	    name = "Sliferyfire";
-	    email = "sliferyfire@gmail.com";
-    };
+        name = "Sliferyfire";
+        email = "sliferyfire@gmail.com";
+      };
 
       init = {
-	      defaultBranch = "main";
+        defaultBranch = "main";
       };
-       
-      pull = { rebase = true; };
 
+      pull = {
+        rebase = true;
+      };
     };
   };
-
 }

@@ -1,19 +1,21 @@
-{ pkgs, config, ... }:
-
 {
-
+  pkgs,
+  config,
+  ...
+}: {
   programs.tmux = {
     enable = true;
     shortcut = "a";
     clock24 = true;
     extraConfig = ''
-      unbind r 
+      unbind r
       bind r source-file ~/.config/tmux/tmux.conf
 
       unbind %
       unbind '"'
       bind | split-window -h
-      bind - split-window -v      
+      bind \ split-window -h
+      bind - split-window -v
       bind -r m resize-pane -Z
 
       bind -r h resize-pane -L 5
@@ -44,5 +46,4 @@
 
     '';
   };
-
 }

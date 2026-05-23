@@ -28,13 +28,15 @@
 
     # Other pckgs
     wget
+    htop
     curl
     sysstat
     lm_sensors
     usbutils
+    fastfetch
+
     # Copy and paste from neovim
     wl-clipboard
-    fastfetch
 
     # Required for steam in Niri
     xwayland-satellite

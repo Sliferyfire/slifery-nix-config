@@ -14,6 +14,13 @@
         viAlias = false;
         vimAlias = true;
 
+        # direnv config
+        utility = {
+          direnv = {
+            enable = true;
+          };
+        };
+
         # ---------------------------------------------------------
         # Core features (lsp, autocomplete, treesitter)
         # ---------------------------------------------------------
@@ -58,8 +65,12 @@
           json.enable = true;
           tailwind.enable = true;
 
+          java.enable = true;
+
           python.enable = true;
           clang.enable = true;
+
+          php.enable = true;
         };
 
         formatter.conform-nvim = {
@@ -215,12 +226,12 @@
                   key = "f";
                   action = "Telescope find_files";
                 }
-                {
-                  icon = " ";
-                  desc = "Live grep";
-                  key = "g";
-                  action = "Telescope live_grep";
-                }
+                # {
+                # icon = " ";
+                # desc = "Live grep";
+                # key = "g";
+                # action = "Telescope live_grep";
+                # }
                 {
                   icon = " ";
                   desc = "File tree";

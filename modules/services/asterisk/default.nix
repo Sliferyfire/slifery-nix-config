@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   # Enable asterisk
   services.asterisk.enable = true;
 
@@ -27,13 +24,22 @@
         same => n,Queue(cola_japam)
         same => n,Hangup()
 
+      ; --- Prueba de Eco (*43) ---
+      exten => *43,1,NoOp(Prueba de Eco para el usuario ''${CALLERID(num)})
+        same => n,Answer()
+        same => n,Playback(demo-echotest) ; Mensaje: "Estás a punto de entrar a la prueba de eco..."
+        same => n,Echo()
+        same => n,Playback(demo-echodone) ; Mensaje: "La prueba ha terminado."
+        same => n,Hangup()
+
+      include => agentes-cola
 
       [from-livekit]
       exten => 200,1,NoOp(Transferencia desde IA recibida)
         same => n,Queue(cola_japam, , , , 300)
         same => n,Hangup()
 
-        include => japam 
+      include => japam
 
 
       [agentes-cola]
@@ -51,105 +57,133 @@
     '';
 
     "pjsip.conf" = ''
-        ; --- Transport ---
-        [transport-udp]
-        	type=transport
-        	protocol=udp
-        	bind=0.0.0.0:5060
-        	external_media_address=172.16.14.196
-        	external_signaling_address=172.16.14.196
-        	local_net=127.0.0.1/32
-        	local_net=172.16.0.0/19
-        		
-        ; --- Usuario de Livekit ---
-        		
-        [livekit_identify]
-        	type=identify
-        	endpoint=livekit
-        	match=127.0.0.1
-        		
-      	[livekit_auth]
-        	type=auth
-        	auth_type=userpass
-        	password=cisco123
-        	username=asterisk_user
-        		
-        [livekit_aor]
-        	type=aor
-        	contact=sip:127.0.0.1:5061
-          qualify_frequency=30
-        		
-        [livekit]
-        	type=endpoint
-        	disallow=all
-        	allow=ulaw,alaw,opus
-        	; Configuración de Tiempos
-        	rtp_timeout=5
-        	rtp_timeout_hold=300
-        	; Configuración de Red
-        	direct_media=no
-        	rtp_symmetric=yes 
-        	force_rport=yes
-        	rewrite_contact=yes
-        	from_domain=127.0.0.1
-        	; Autenticación
-        	auth=livekit_auth
-        	outbound_auth=livekit_auth
-        	aors=livekit_aor
-        	; Transferencia 
-        	allow_transfer=yes
-        	context=from-livekit 
-        		
-        ; --- Extensión 6001 ---
-        [6001]
-        	type=endpoint
-        	context=japam
-        	disallow=all
-        	allow=ulaw,alaw
-        	language=es
-        	direct_media=no
-        	force_rport=yes
-          rtp_symmetric=yes
-        	rewrite_contact=yes 
-        	auth=6001-auth
-        	aors=6001-aor
-        		
-        [6001-auth]
-        	type=auth
-        	auth_type=userpass
-        	password=cisco123
-        	username=6001
-        		
-        [6001-aor]
-        	type=aor
-        	max_contacts=2
-        	qualify_frequency=60
-        	remove_existing=yes
-        		
-        ; --- Extensión 6002 ---
-        [6002]
-        	type=endpoint
-        	context=japam
-        	disallow=all
-        	allow=ulaw,alaw
-        	language=es
-        	direct_media=no
-        	force_rport=yes
-          rtp_symmetric=yes
-          rewrite_contact=yes 
-        	auth=6002-auth
-        	aors=6002-aor
-        		
-        [6002-auth]
-        	type=auth
-        	auth_type=userpass
-        	password=cisco123
-        	username=6002
-        		
-        [6002-aor]
-        	type=aor
-        	max_contacts=2
-        	qualify_frequency=60
+       ; --- Transport ---
+       [transport-udp]
+       	type=transport
+       	protocol=udp
+       	bind=0.0.0.0:5060
+       	external_media_address=192.168.1.66
+       	external_signaling_address=192.168.1.66
+       	local_net=127.0.0.1/32
+       	local_net=172.16.0.0/19
+        local_net=172.25.18.0/24
+        local_net=192.168.1.66/24
+
+       ; --- Usuario de Livekit ---
+
+       [livekit_identify]
+       	type=identify
+       	endpoint=livekit
+       	match=127.0.0.1
+
+      [livekit_auth]
+       	type=auth
+       	auth_type=userpass
+       	password=cisco123
+       	username=asterisk_user
+
+       [livekit_aor]
+       	type=aor
+       	contact=sip:127.0.0.1:5061
+         qualify_frequency=30
+
+       [livekit]
+       	type=endpoint
+       	disallow=all
+       	allow=ulaw,alaw,opus
+       	; Configuración de Tiempos
+       	rtp_timeout=5
+       	rtp_timeout_hold=300
+       	; Configuración de Red
+       	direct_media=no
+       	rtp_symmetric=yes
+       	force_rport=yes
+       	rewrite_contact=yes
+       	from_domain=127.0.0.1
+       	; Autenticación
+       	auth=livekit_auth
+       	outbound_auth=livekit_auth
+       	aors=livekit_aor
+       	; Transferencia
+       	allow_transfer=yes
+       	context=from-livekit
+
+       ; --- Extensión 6001 ---
+       [6001]
+       	type=endpoint
+       	context=japam
+       	disallow=all
+       	allow=ulaw,alaw
+       	language=es
+       	direct_media=no
+       	force_rport=yes
+         rtp_symmetric=yes
+       	rewrite_contact=yes
+       	auth=6001-auth
+       	aors=6001-aor
+
+       [6001-auth]
+       	type=auth
+       	auth_type=userpass
+       	password=cisco123
+       	username=6001
+
+       [6001-aor]
+       	type=aor
+       	max_contacts=3
+       	qualify_frequency=60
+       	remove_existing=yes
+
+       ; --- Extensión 6002 ---
+       [6002]
+       	type=endpoint
+       	context=japam
+       	disallow=all
+       	allow=ulaw,alaw
+       	language=es
+       	direct_media=no
+       	force_rport=yes
+         rtp_symmetric=yes
+         rewrite_contact=yes
+       	auth=6002-auth
+       	aors=6002-aor
+
+       [6002-auth]
+       	type=auth
+       	auth_type=userpass
+       	password=cisco123
+       	username=6002
+
+       [6002-aor]
+       	type=aor
+       	max_contacts=3
+       	qualify_frequency=60
+
+       ; --- Extensión 6003 ---
+       [6003]
+       	type=endpoint
+       	context=japam
+       	disallow=all
+       	allow=ulaw,alaw
+       	language=es
+       	direct_media=no
+       	force_rport=yes
+         rtp_symmetric=yes
+       	rewrite_contact=yes
+       	auth=6003-auth
+       	aors=6003-aor
+
+       [6003-auth]
+       	type=auth
+       	auth_type=userpass
+       	password=cisco123
+       	username=6003
+
+       [6003-aor]
+       	type=aor
+       	max_contacts=3
+       	qualify_frequency=60
+       	remove_existing=yes
 
     '';
 
@@ -169,7 +203,5 @@
       joinempty = yes
       leavewhenempty = no
     '';
-
   };
-
 }

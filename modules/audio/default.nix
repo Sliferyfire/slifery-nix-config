@@ -1,7 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
-
+  pkgs,
+  lib,
+  ...
+}: {
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   services.power-profiles-daemon = {
@@ -32,6 +33,4 @@
 
     udev.packages = with pkgs; [gnome-settings-daemon];
   };
-
-
 }

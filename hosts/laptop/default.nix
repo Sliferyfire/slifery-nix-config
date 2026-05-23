@@ -29,14 +29,16 @@
     };
   };
 
-  # ----- Network -----
+  # ----- Network -----Puertos
 
   # Network Host name
   networking.hostName = "rog-strix";
 
   # Enable networking
   networking.networkmanager.enable = true;
+
   networking.firewall.enable = true;
+  # networking.firewall.checkReversePath = "loose";
 
   # List services that you want to enable:
 
@@ -44,16 +46,18 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ 5060 ];
-  networking.firewall.allowedUDPPorts = [5060];
-  networking.firewall.allowedUDPPortRanges = [
-    {
-      from = 10000;
-      to = 20000;
-    }
-  ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # networking.firewall.allowedTCPPorts = [5060];
+  # networking.firewall.allowedUDPPorts = [5060];
+  # networking.firewall.allowedUDPPortRanges = [
+  # {
+  # from = 10000;
+  # to = 20000;
+  # }
+  # {
+  # from = 20001;
+  # to = 25000;
+  # }
+  # ];
 
   # ----- BLUETOOTH -----
 

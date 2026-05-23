@@ -109,6 +109,13 @@
           {
             "displayMode": "onhover",
             "iconColor": "none",
+            "id": "Volume",
+            "middleClickCommand": "pwvucontrol || pavucontrol",
+            "textColor": "none"
+          },
+          {
+            "displayMode": "onhover",
+            "iconColor": "none",
             "id": "Network",
             "textColor": "none"
           },
@@ -119,35 +126,13 @@
             "textColor": "none"
           },
           {
-            "defaultSettings": {
-              "activeBackend": "qt6-multimedia",
-              "automationMode": "random",
-              "automationTime": 300,
-              "fillMode": "fit",
-              "mpvSocket": "/tmp/mpv-socket",
-              "profile": "default",
-              "volume": 1,
-              "wallpapersFolder": "~/Pictures/Wallpapers"
-            },
-            "id": "plugin:video-wallpaper"
-          },
-          {
-            "defaultSettings": {
-              "enableTodoIntegration": false,
-              "notecardsEnabled": true,
-              "pincardsEnabled": true,
-              "showCloseButton": true
-            },
-            "id": "plugin:clipper"
-          },
-          {
             "deviceNativePath": "__default__",
             "displayMode": "graphic-clean",
             "hideIfIdle": false,
             "hideIfNotDetected": true,
             "id": "Battery",
-            "showNoctaliaPerformance": false,
-            "showPowerProfiles": false
+            "showNoctaliaPerformance": true,
+            "showPowerProfiles": true
           },
           {
             "colorizeDistroLogo": false,
@@ -701,6 +686,10 @@
           "name": "eDP-2",
           "widgets": [
             {
+              "barWidth": 0.6,
+              "bloomIntensity": 0.5,
+              "customPrimaryColor": "#6750a4",
+              "customSecondaryColor": "#625b71",
               "defaultSettings": {
                 "barWidth": 0.6,
                 "bloomIntensity": 0.5,
@@ -715,9 +704,17 @@
                 "visualizationMode": 3,
                 "waveThickness": 1
               },
+              "fadeWhenIdle": true,
               "id": "plugin:fancy-audiovisualizer",
+              "innerDiameter": 0.7,
+              "ringOpacity": 0.8,
+              "rotationSpeed": 0.5,
               "scale": 1.6128258770283406,
+              "sensitivity": 1.5,
               "showBackground": true,
+              "useCustomColors": false,
+              "visualizationMode": 4,
+              "waveThickness": 1.1,
               "x": 1380,
               "y": 80
             }
@@ -733,12 +730,13 @@
     "openedPanel": "",
     "lockScreenActive": false,
     "wallpapers": {
+      "eDP-1": "/home/sliferyfire/Pictures/Wallpapers/greenForest.jpg",
       "eDP-2": "/home/sliferyfire/Pictures/Wallpapers/greenForest.jpg"
     },
     "desktopWidgetsEditMode": false,
     "display": {
-      "eDP-2": {
-        "name": "eDP-2",
+      "eDP-1": {
+        "name": "eDP-1",
         "connected": true,
         "scale": 1,
         "width": 1920,
@@ -747,7 +745,7 @@
         "y": 0,
         "physical_width": 340,
         "physical_height": 220,
-        "refresh_rate": 60007,
+        "refresh_rate": 165019,
         "vrr_supported": true,
         "vrr_enabled": false,
         "transform": "Normal"

@@ -3,10 +3,7 @@
   pkgs,
   inputs,
   ...
-}:
-
-{
-
+}: {
   # imports = [inputs.niri.homeModules.niri];
 
   programs.niri = {
@@ -14,7 +11,7 @@
     # enable = true;
     settings = {
       spawn-at-startup = [
-        { command = [ "noctalia-shell" ]; }
+        {command = ["noctalia-shell"];}
         {
           command = [
             "xwayland-satellite"
@@ -29,11 +26,11 @@
 
       window-rules = [
         {
-          matches = [ { app-id = "Alacritty"; } ];
+          matches = [{app-id = "Alacritty";}];
           draw-border-with-background = false;
         }
         {
-          matches = [ { app-id = "Firefox"; } ];
+          matches = [{app-id = "Firefox";}];
           draw-border-with-background = false;
         }
       ];
@@ -67,7 +64,6 @@
           };
           inactive.color = "#313244";
         };
-
       };
 
       binds = with config.lib.niri.actions; {
@@ -201,6 +197,16 @@
           "previous"
         ];
 
+        # Plugin Screenshot
+        "Mod+S".action.spawn = [
+          "noctalia-shell"
+          "ipc"
+          "call"
+          "plugin:screenshot"
+          "takeScreenshot"
+          "region"
+        ];
+
         # Plugin clipper
         "Mod+V".action.spawn = [
           "noctalia-shell"
@@ -224,9 +230,7 @@
           "addSelectionToNoteCard"
         ];
       };
-
     };
-
   };
 
   home.packages = with pkgs; [
@@ -237,5 +241,4 @@
     playerctl
     inputs.noctalia-qs.packages.${pkgs.system}.default
   ];
-
 }

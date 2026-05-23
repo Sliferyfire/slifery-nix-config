@@ -100,7 +100,19 @@
   programs.zsh.enable = true;
   environment.shells = with pkgs; [zsh];
 
-  # Hardware Configuration
+  # Habilitar binarios dinámicos (Necesario para uv y Python precompilados)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+    openssl
+    # Puedes agregar más librerías aquí en el futuro si algún paquete de Python se queja de un .so faltante
+  ];
+
+  environment.systemPackages = [
+    pkgs.livekit-cli
+    pkgs.distrobox
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
