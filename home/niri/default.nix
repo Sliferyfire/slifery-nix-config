@@ -239,6 +239,6 @@
     alacritty
     brightnessctl
     playerctl
-    inputs.noctalia-qs.packages.${pkgs.system}.default
+    inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
