@@ -13,7 +13,6 @@
     ./services/flatpak
     ./services/docker
     ./services/lamp
-    ./services/asterisk
 
     ./desktop/plasma
 

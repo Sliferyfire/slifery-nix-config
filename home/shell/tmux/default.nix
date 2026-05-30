@@ -14,7 +14,6 @@
       unbind %
       unbind '"'
       bind | split-window -h
-      bind \ split-window -h
       bind - split-window -v
       bind -r m resize-pane -Z
 
