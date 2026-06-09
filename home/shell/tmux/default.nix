@@ -46,9 +46,8 @@
 
       set-option -g status-position top
 
-      set-option -g allow-rename off
-
-
+      set-option -g automatic-rename on
+      set-option -g automatic-rename-format "#{pane_current_command}"
 
       run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
       set -g @catppuccin_flavor "mocha"
