@@ -49,17 +49,23 @@
       set-option -g automatic-rename on
       set-option -g automatic-rename-format "#{pane_current_command}"
 
-      run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
+      # Variables y el estilo de Catppuccin
       set -g @catppuccin_flavor "mocha"
       set -g @catppuccin_window_status_style "rounded"
       set -g @catppuccin_directory_text "#{s|^/home/sliferyfire|~|:pane_current_path}"
       set -g @catppuccin_window_default_text "#W"
       set -g @catppuccin_window_current_text "#W"
+
+      # Ejecucion del plugin de catppuccion
+      run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
+
+      # Barra de estado
+      set -g status-position top
       set -g status-right-length 100
       set -g status-left-length 100
       set -g status-left ""
       set -g status-right ""
-      set -ag status-left "#{E:@catpuccin_status_session}"
+      set -ag status-left "#{E:@catppuccin_status_session}" # ¡Aquí faltaba una 'c'!
       set -ag status-right "#{E:@catppuccin_status_directory}"
       set -ag status-right "#{E:@catppuccin_status_application}"
       set -ag status-right "#{E:@catppuccin_status_session}"
