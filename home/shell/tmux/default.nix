@@ -46,10 +46,16 @@
 
       set-option -g status-position top
 
+      set-option -g allow-rename off
+
+
+
       run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
       set -g @catppuccin_flavor "mocha"
       set -g @catppuccin_window_status_style "rounded"
       set -g @catppuccin_directory_text "#{s|^/home/sliferyfire|~|:pane_current_path}"
+      set -g @catppuccin_window_default_text "#W"
+      set -g @catppuccin_window_current_text "#W"
       set -g status-right-length 100
       set -g status-left-length 100
       set -g status-left ""
