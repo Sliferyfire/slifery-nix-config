@@ -75,6 +75,19 @@
             "textColor": "none",
             "useMonospaceFont": true,
             "usePadding": false
+          },
+          {
+            "defaultSettings": {
+              "activeBackend": "qt6-multimedia",
+              "automationMode": "random",
+              "automationTime": 300,
+              "fillMode": "fit",
+              "mpvSocket": "/tmp/mpv-socket",
+              "profile": "default",
+              "volume": 1,
+              "wallpapersFolder": "~/Pictures/Wallpapers"
+            },
+            "id": "plugin:video-wallpaper"
           }
         ],
         "center": [
@@ -169,7 +182,7 @@
       "animationSpeed": 1,
       "animationDisabled": false,
       "compactLockScreen": false,
-      "lockScreenAnimations": false,
+      "lockScreenAnimations": true,
       "lockOnSuspend": true,
       "showSessionButtonsOnLockScreen": false,
       "showHibernateOnLockScreen": false,
@@ -222,7 +235,7 @@
     "ui": {
       "fontDefault": "Sans Serif",
       "fontFixed": "monospace",
-      "fontDefaultScale": 1.1099999999999999,
+      "fontDefaultScale": 1.1,
       "fontFixedScale": 1,
       "tooltipsEnabled": true,
       "scrollbarAlwaysVisible": true,
@@ -498,29 +511,29 @@
           "action": "hibernate",
           "command": "",
           "countdownEnabled": true,
-          "enabled": true,
-          "keybind": "3"
+          "enabled": false,
+          "keybind": ""
         },
         {
           "action": "reboot",
           "command": "",
           "countdownEnabled": true,
           "enabled": true,
-          "keybind": "4"
+          "keybind": "3"
         },
         {
           "action": "logout",
           "command": "",
           "countdownEnabled": true,
-          "enabled": true,
-          "keybind": "5"
+          "enabled": false,
+          "keybind": ""
         },
         {
           "action": "shutdown",
           "command": "",
           "countdownEnabled": true,
           "enabled": true,
-          "keybind": "6"
+          "keybind": "4"
         },
         {
           "action": "rebootToUefi",
@@ -540,7 +553,7 @@
     },
     "notifications": {
       "enabled": true,
-      "enableMarkdown": false,
+      "enableMarkdown": true,
       "density": "default",
       "monitors": [],
       "location": "top_right",
@@ -588,7 +601,7 @@
       "spectrumFrameRate": 30,
       "visualizerType": "linear",
       "mprisBlacklist": [],
-      "preferredPlayer": "",
+      "preferredPlayer": "spotify",
       "volumeFeedback": false,
       "volumeFeedbackSoundFile": ""
     },
@@ -725,7 +738,7 @@
   },
   "state": {
     "doNotDisturb": false,
-    "noctaliaPerformanceMode": false,
+    "noctaliaPerformanceMode": true,
     "barVisible": true,
     "openedPanel": "",
     "lockScreenActive": false,
@@ -735,8 +748,8 @@
     },
     "desktopWidgetsEditMode": false,
     "display": {
-      "eDP-1": {
-        "name": "eDP-1",
+      "eDP-2": {
+        "name": "eDP-2",
         "connected": true,
         "scale": 1,
         "width": 1920,
@@ -745,7 +758,7 @@
         "y": 0,
         "physical_width": 340,
         "physical_height": 220,
-        "refresh_rate": 165019,
+        "refresh_rate": 60007,
         "vrr_supported": true,
         "vrr_enabled": false,
         "transform": "Normal"

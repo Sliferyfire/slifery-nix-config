@@ -13,10 +13,26 @@
 
       unbind %
       unbind '"'
-      bind | split-window -h
-      bind - split-window -v
+
+      # Binds para hacer split de la ventana
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+
+      # Bind para crear nueva ventana
+      bind c new-window -c "#{pane_current_path}"
+
+      # Bind para maximizar un split
       bind -r m resize-pane -Z
 
+      # Binds para moverse entre las tabs de tmux
+      bind -n S-Left  previous-window
+      bind -n S-Right next-window
+
+      # Binds para reorganizar los tabs
+      bind -n M-S-Left swap-window -t -1\; select-window -t -1
+      bind -n M-S-Right swap-window -t +1\; select-window -t +1
+
+      # Binds para redimensionar los splits de la ventana
       bind -r h resize-pane -L 5
       bind -r j resize-pane -D 5
       bind -r k resize-pane -U 5
